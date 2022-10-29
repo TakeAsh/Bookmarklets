@@ -10,6 +10,10 @@
 - copy title and URL of current page to clipboard as text.
 - [JavaScript で任意のテキストをクリップボードにコピーする｜まくろぐ](https://maku.blog/p/buk5i2o/)
 
+### showLocationInfo
+- show location information of current pate.
+- [Location - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Location)
+
 ## Twitter
 
 ### showTwEmoji
