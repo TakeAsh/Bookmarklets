@@ -1,5 +1,10 @@
 # Bookmarklets
 
+## General
+
+### show Unicode
+- show unicode of selected range.
+
 ## Title & URL
 
 ### copyAsMarkDown
