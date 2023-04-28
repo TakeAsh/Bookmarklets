@@ -1,24 +1,22 @@
 ﻿javascript:
-(async (w, d) => {
-  if (!d.execCommand) {
-    alert('execCommand is depreciated');
-    return;
-  }
-  if (!navigator.clipboard.readText) {
-    alert('clipboard.readText is not implemented');
-    return;
-  }
-  const result = await navigator.permissions.query({ name: 'clipboard-read' });
-  if (result.state !== 'granted' && result.state !== 'prompt') {
-    alert('clipboard-read is not allowed');
-    return;
-  }
-  while (!d.hasFocus()) {
-    await sleep(300);
-  }
+((w, d) => {
   try {
-    d.execCommand('copy');
-    const text = await navigator.clipboard.readText(); /* w.getSelection().toString() */
+    console.log(getSelectedNodes());
+    const text = getSelectedNodes()
+      .filter((node) => ['#text', 'IMG'].includes(node.nodeName))
+      .reduce(
+        (acc, node) => {
+          acc += node.nodeName == 'IMG'
+            ? node.alt
+            : node.textContent;
+          return acc;
+        },
+        ''
+      );
+    if (text == '') {
+      alert('No selection');
+      return;
+    }
     const encoded = Array.from(text)
       .map((c) => `${c}{${c.codePointAt(0).toString(16)}}`)
       .join('');
@@ -26,7 +24,23 @@
   } catch (err) {
     alert(err);
   }
-  function sleep(ms) {
-    return new Promise((resolve) => { setTimeout(resolve, ms); });
+  function getSelectedNodes() {
+    const selection = w.getSelection();
+    const fragment = Array.from(Array(selection.rangeCount).keys())
+      .reduce(
+        (acc, i) => {
+          acc.append(selection.getRangeAt(i).cloneContents());
+          return acc;
+        },
+        d.createDocumentFragment()
+      );
+    const nodes = [];
+    const walker = d.createTreeWalker(fragment);
+    let node = walker.currentNode;
+    while (node) {
+      nodes.push(node);
+      node = walker.nextNode();
+    }
+    return nodes;
   }
 })(window, document);
