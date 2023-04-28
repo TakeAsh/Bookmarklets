@@ -4,6 +4,7 @@
 
 ### show Unicode
 - show unicode of selected range.
+- [twitter/twemoji](https://github.com/twitter/twemoji) is acceptable.
 
 ## Title & URL
 
