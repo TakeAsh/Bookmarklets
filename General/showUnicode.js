@@ -1,8 +1,8 @@
 ﻿javascript:
 ((w, d) => {
   try {
-    console.log(getSelectedNodes());
-    const text = getSelectedNodes()
+    const selection = w.getSelection();
+    const text = getSelectedNodes(selection)
       .filter((node) => ['#text', 'IMG'].includes(node.nodeName))
       .reduce(
         (acc, node) => {
@@ -12,7 +12,7 @@
           return acc;
         },
         ''
-      );
+      ) || selection.toString();
     if (text == '') {
       alert('No selection');
       return;
@@ -24,8 +24,7 @@
   } catch (err) {
     alert(err);
   }
-  function getSelectedNodes() {
-    const selection = w.getSelection();
+  function getSelectedNodes(selection) {
     const fragment = Array.from(Array(selection.rangeCount).keys())
       .reduce(
         (acc, i) => {
