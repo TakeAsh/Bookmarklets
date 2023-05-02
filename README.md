@@ -25,3 +25,8 @@
 ### showTwEmoji
 - apply Twitter Emoji to current page.
 - [twitter/twemoji](https://github.com/twitter/twemoji)
+
+## YouTube
+
+### showThumbnail
+- show thumbnail of current video.
